@@ -6,40 +6,18 @@
     <link href="css/jes.css" rel="stylesheet">
     <link href="css/scrolling-nav.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" style="background-color: #f1c431;">
 
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: #f1c431; border: none;">
-        <div class="container">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!--logo can go in the a under here-->
-                <a class="navbar-brand page-scroll" href="#page-top"></a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav navbar-right" style="font-family: Open Sans; font-size: 18px; font-color: black;">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#jen">Jen</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#learn">Learn</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
+        <div class="container" >
+           
+                <ul class="nav navbar-nav navbar-right" style="font-family: Montserrat; font-size: 18px">
+                     <li><a style="color:#50514F">JEN</a></li>
+                     <li><a style="color:#50514F">LEARN</a></li>
+                     <li><a style="color:#50514F">CONTACT</a></li>
                 </ul>
             </div>
         </div>
@@ -47,14 +25,14 @@
 
     <section id="intro" class="intro-section" style="background-color: #f1c431">
         <div class="container">
-            <img src="img/circuit.png" style="height:600px;position:relative;bottom:100px;"
+            <img src="img/circuit.png" style="height:600px;position:relative;bottom:100px;">
         </div>
     </section>
 
     <section id="services" class="services-section" style="background-color: #ff4e00">
         <div class="container">
             <div class="col-lg-8">
-            <div class="panel" style="border: 1px solid black; background-color: ff4e00">
+            <div class="panel" style="border: 1px solid black; background-color: #ff4e00">
                 <div class="panel-heading">
                     <h2>Resistors</h2>
                 </div>
@@ -86,28 +64,6 @@
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/scrolling-nav.js"></script>
 
-<aside draggable="true" id="dragme">
-</aside>
-
-
-<script src="js/jes.js"></script>
-
-<style>
-    aside { 
-    position: absolute;
-    left: 0;
-    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
-    width: 100px;
-    height: 100px; 
-    background: green; 
-    z-index: 1000;
-    border: 2px  solid rgba(0,0,0,0.5); 
-    border-radius: 4px; padding: 8px;
-    #hi {
-        height: 100px;
-        width: 100px;
-    }
-}</style>
 </body>
 
 </html>
