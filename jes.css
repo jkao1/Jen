@@ -12,3 +12,22 @@
 #bg {
     width: 750px;
 }
+
+#bar1 {
+    width: 20px;
+	height: 400px;
+	background: red;
+}
+#bar2 {
+    width: 300px;
+	height: 20px;
+	background: red;
+}
+#bar3 {
+    position: relative;
+    bottom: 20px;
+    left: 300px;
+    width: 300px;
+	height: 20px;
+	background: red;
+}
