@@ -19,4 +19,3 @@ var dm = document.getElementById('dragme');
 dm.addEventListener('dragstart',drag_start,false); 
 document.body.addEventListener('dragover',drag_over,false); 
 document.body.addEventListener('drop',drop,false); 
-
