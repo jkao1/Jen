@@ -15,3 +15,8 @@ aside {
 body, html {
 	min-height: 100vh;
 }
+
+::selection {
+  background-color: #fe6261;
+  color: black;
+}
