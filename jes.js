@@ -19,7 +19,3 @@ setInterval(function() {
         top: function(i,v) { return newv(v, 38, 40); }
     });
 }, 20);
-
-var rect = document.getElementById('box').getBoundingClientRect();
-console.log(rect.top, rect.right, rect.bottom, rect.left);
-
