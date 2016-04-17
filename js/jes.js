@@ -15,6 +15,7 @@ function drop(event) {
 	dm[parseInt(offset[2])].style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
 	event.preventDefault();
 	return false;
+
 }
 
 var dm = document.getElementsByClassName('dragme');
