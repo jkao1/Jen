@@ -4,7 +4,7 @@ aside {
   top: 0;
   /* set these so Chrome doesn't return 'auto' from getComputedStyle */
   width: 200px;
-  padding: 8px;
+  padding: 15px;
 }
 
 .second {
