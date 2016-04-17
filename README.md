@@ -6,4 +6,4 @@ We wanted to help regain this field's popularity by creating the site New Jen. I
 the fundamentals of computer hardware.
 
 ##Live Preview
-marge.stuy.edu/~jason.kao/new-jen
+Click <a href="marge.stuy.edu/~jason.kao/new-jen/">here</a> for the live preview.
