@@ -1,8 +1,17 @@
-aside { 
-    position: absolute;
-    left: 0;
-    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
-    width: 100px;
-    height: 100px; 
-    z-index: 1000;
-    border-radius: 4px; padding: 8px;
+aside {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+  width: 200px;
+  padding: 8px;
+}
+
+.second {
+	left: 100px;
+	top: 100px;
+}
+
+body, html {
+	min-height: 100vh;
+}
