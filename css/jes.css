@@ -4,8 +4,6 @@ aside {
     top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
     width: 100px;
     height: 100px; 
-    background: green; 
     z-index: 1000;
-    border: 2px  solid rgba(0,0,0,0.5); 
     border-radius: 4px; padding: 8px;
 
