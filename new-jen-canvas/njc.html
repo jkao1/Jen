@@ -23,11 +23,13 @@ function start() {
 var area = {
     canvas : document.createElement("canvas"),
     start : function() {
+        // setting up canvas
         this.canvas.width = 960;
         this.canvas.height = 560;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+        // keyboard stuff
         window.addEventListener('keydown', function (e) {
             area.keys = (area.keys || []);
             area.keys[e.keyCode] = true;
@@ -49,6 +51,8 @@ function component(width, height, color, x, y) {
     this.x = x;
     this.y = y;  
     this.angle = 0;  
+    this.speed = 1;
+    this.moveAngle = 1;
     this.update = function() {
         ctx = area.context;
         ctx.save();
@@ -59,20 +63,20 @@ function component(width, height, color, x, y) {
         ctx.restore();
     }
     this.newPos = function() {
-        this.x += this.speedX;
-        this.y += this.speedY;        
+        this.angle += this.moveAngle * Math.PI / 180;
+        this.x += this.speedX * Math.sin(this.angle);
+        this.y += this.speedY * Math.cos(this.angle);        
     }    
 }
 
 function updateGameArea() {
     area.clear();
-    char.angle += 1 * Math.PI / 180;
     /* arrow key (start) */
     char.speedX = 0;
     char.speedY = 0; 
-    if (area.keys && area.keys[32]) {char.speedX = -1; }
-    if (area.keys && area.keys[39]) {char.speedX = 1; }
-    if (area.keys && area.keys[38]) {char.speedY = -1; }
+    if (area.keys && area.keys[37]) {char.speedX = -1; } // left arrow key
+    if (area.keys && area.keys[39]) {char.speedX = 1; } // right arrow key
+    if (area.keys && area.keys[38]) {char.speedY = -1; } // down arrow key
     if (area.keys && area.keys[40]) {char.speedY = 1; }
     /* arrow key (end) */
     char.newPos();    
