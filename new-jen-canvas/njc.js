@@ -1,7 +1,9 @@
 var char;
+var ob1, ob2, ob3, ob4, ob5;
 
 function start() { // initiates game
     char = new component(15, 15, "#fa8940", 20, 265); 
+    ob1 = new component(120, 80, "red", 0, 480);
     area.start();
 }
 
@@ -64,17 +66,22 @@ function component(width, height, color, x, y, type) {
 }
 
 var inc = 0; // angleInc's increment
+var angleSpeed = 0;
 
 function updateArea() {
     area.clear(); // so no duplicate char
     char.angleInc = 0;
     char.speed = 1;
     if (area.keys && area.keys[32]) {
-        char.angleInc = 3 + inc;
+        angleSpeed = 3 + inc;
+        char.angleInc = angleSpeed;
         inc += 0.1; // the longer area.keys[32], the faster char spins
-    } else {
+        
+    } else if (angleSpeed > 0) {
         inc = 0;
-    }
+        angleSpeed /= 2;
+        char.angleInc = angleSpeed;
+    } 
     /* 
     alternate controls:
     reg rotation: (左(37,+angleInc), 右(39,-angleInc), 上(40,-speed), 下(38,+speed))
@@ -82,3 +89,10 @@ function updateArea() {
     char.posXY(); // updates 2d location  
     char.posDeg(); // updates rotation factor
 }
+
+window.onkeydown = function(e) {
+    if(e.keyCode == 32 && e.target == document.body) {
+        e.preventDefault();
+        return false;
+    }
+};
