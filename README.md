@@ -1,4 +1,4 @@
-# new-jen
+# NewJen
 made by Jason Kao and Ashneel Das @ defhacks(NY), 2016
 ##Intro
 The number of humans working in electrical engineering and other computer-hardware-related fields is slowly diminishing. 
