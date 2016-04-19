@@ -12,7 +12,7 @@ var area = { // setting up canvas and its properties
         this.canvas.height = 560;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateArea, 20); // frames
+        this.interval = setInterval(updateArea, 20); 
         // keyboard stuff
         window.addEventListener('keydown', function (e) {
             area.keys = (area.keys || []);
@@ -23,7 +23,7 @@ var area = { // setting up canvas and its properties
         })
     },
     clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); 
     }
 }
 
@@ -63,15 +63,22 @@ function component(width, height, color, x, y, type) {
     }    
 }
 
+var inc = 0; // angleInc's increment
+
 function updateArea() {
     area.clear();
     char.angleInc = 0;
     char.speed = 1;
-    // space(32) controls
-    if (area.keys && area.keys[32]) {char.angleInc = 3; } 
+    // space(32) 
+    if (area.keys && area.keys[32]) {
+        char.angleInc = 3 + inc;
+        inc += 0.1; // the longer area.keys[32], the faster char spins
+    } else {
+        inc = 0;
+    }
     /* 
     alternate controls:
-    reg rotation: ( 左(37,+angleInc), 右(39,-angleInc), 上(40,-speed), 下(38,+speed))
+    reg rotation: (左(37,+angleInc), 右(39,-angleInc), 上(40,-speed), 下(38,+speed))
     */
     char.posXY(); // updates 2d location  
     char.posDeg(); // updates rotation factor
