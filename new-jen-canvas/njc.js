@@ -66,10 +66,9 @@ function component(width, height, color, x, y, type) {
 var inc = 0; // angleInc's increment
 
 function updateArea() {
-    area.clear();
+    area.clear(); // so no duplicate char
     char.angleInc = 0;
     char.speed = 1;
-    // space(32) 
     if (area.keys && area.keys[32]) {
         char.angleInc = 3 + inc;
         inc += 0.1; // the longer area.keys[32], the faster char spins
