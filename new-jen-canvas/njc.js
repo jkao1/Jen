@@ -1,9 +1,9 @@
 var char;
-var ob1, ob2, ob3, ob4, ob5;
+var obstacle;
 
 function start() { // initiates game
     char = new component(15, 15, "#fa8940", 20, 265); 
-    ob1 = new component(120, 80, "red", 0, 480);
+    obstacle  = new component(10, 200, "red",300, 480);
     area.start();
 }
 
@@ -29,12 +29,7 @@ var area = { // setting up canvas and its properties
     }
 }
 
-function component(width, height, color, x, y, type) {
-    this.type = type; // for images
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    } 
+function component(width, height, color, x, y) {
     this.width = width;
     this.height = height;
     this.x = x; // x pos
@@ -48,12 +43,8 @@ function component(width, height, color, x, y, type) {
         // canvas receives char properties (loc, deg, color)
         ctx.translate(this.x, this.y); 
         ctx.rotate(this.angle);
-        if (type == "image") {
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        } else {
-            ctx.fillStyle = color;
-            ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        }
+        ctx.fillStyle = color;
+        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         // canvas spawns a duplicate char to its own properties
         ctx.restore();
         // canvas is restored to its last save but new char remains
@@ -71,15 +62,14 @@ var angleSpeed = 0;
 function updateArea() {
     area.clear(); // so no duplicate char
     char.angleInc = 0;
-    char.speed = 1;
+    char.speed = 3;
     if (area.keys && area.keys[32]) {
         angleSpeed = 3 + inc;
         char.angleInc = angleSpeed;
         inc += 0.1; // the longer area.keys[32], the faster char spins
-        
     } else if (angleSpeed > 0) {
         inc = 0;
-        angleSpeed /= 2;
+        angleSpeed -= 1;
         char.angleInc = angleSpeed;
     } 
     /* 
@@ -88,6 +78,7 @@ function updateArea() {
     */
     char.posXY(); // updates 2d location  
     char.posDeg(); // updates rotation factor
+    obstacle.update();
 }
 
 window.onkeydown = function(e) {
