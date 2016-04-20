@@ -1,9 +1,10 @@
 var char;
 var obA;
+var img;
 
 function start() { // initiates game
-    char = new component(15, 15, "#fa8940", 250, 265); 
-    obA = new component(200, 200, "red", 100, 100); 
+    char = new component(15, 15, "#fa8940", 250, 265, "char"); 
+    obA = new component(200, 200, "red", 100, 100, "obA"); 
     area.start();
 }
 
@@ -32,7 +33,12 @@ var area = { // setting up canvas and its properties
     }
 }
 
-function component(width, height, color, x, y) {
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
     this.width = width;
     this.height = height;
     this.x = x; // x pos
@@ -56,7 +62,8 @@ function component(width, height, color, x, y) {
     this.posXY = function() {
         this.angle += this.angleInc * Math.PI / 180;
         this.x += this.speed * Math.sin(this.angle);
-        this.y -= this.speed * Math.cos(this.angle);        
+        this.y -= this.speed * Math.cos(this.angle);   
+        
     }  
     this.altPos = function() {
         this.angle += this.angleInc * Math.PI / 180;
@@ -89,6 +96,17 @@ function component(width, height, color, x, y) {
         }
         return crash;*/
     }
+    this.scaleto = function() {
+        ctx = area.context;
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.scale(2,2);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = color;
+        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore();
+        area.stop();
+    }
 }
 
 var inc = 0; // angleInc's increment
@@ -112,6 +130,7 @@ function updateArea() {
         } 
         char.posDeg(); // updates rotation factor
         char.altPos(); // updates rotation orientation
+        char.scaleto();
     } else { 
         area.clear(); // so no duplicate char
         obA.posXY();
@@ -138,3 +157,7 @@ window.onkeydown = function(e) {
         return false;
     }
 };
+
+function hi() {
+    char.scaleto();
+}
