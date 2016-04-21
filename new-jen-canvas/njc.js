@@ -1,8 +1,10 @@
 var char;
 var obA;
+var bullet;
 
 function start() { // initiates game
     char = new component(15, 15, "#fa8940", 250, 265, "char"); 
+    img = new component(16, 16, "blue", 20, 20, "img");
     obA = new component(200, 200, "red", 400, 400, "obA"); 
     area.start();
 }
@@ -93,6 +95,9 @@ function component(width, height, color, x, y, type) {
         ctx.restore();
         area.stop();
     }
+    this.shoot = function() {
+        
+    }
 }
 
 var inc = 0; // angleInc's increment
@@ -120,7 +125,9 @@ function updateArea() {
     } else { 
         area.clear(); // so no duplicate char
         obA.posXY();
-        obA.posDeg();   
+        obA.posDeg();
+        img.posXY();
+        img.posDeg();   
         char.angleInc = 0;
         char.speed = 3;
         if (area.keys && area.keys[32]) {
