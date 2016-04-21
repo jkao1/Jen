@@ -1,10 +1,9 @@
 var char;
 var obA;
-var img;
 
 function start() { // initiates game
     char = new component(15, 15, "#fa8940", 250, 265, "char"); 
-    obA = new component(200, 200, "red", 100, 100, "obA"); 
+    obA = new component(200, 200, "red", 400, 400, "obA"); 
     area.start();
 }
 
@@ -73,28 +72,15 @@ function component(width, height, color, x, y, type) {
         var myright = this.x + (this.width);
         var mytop = this.y - (this.height / 2);
         var mybottom = this.y + (this.height / 2);
-        var otherleft = otherobj.x;
+        var otherleft = otherobj.x - (otherobj.width / 2);
         var otherright = otherobj.x + (otherobj.width / 2);
-        var othertop = otherobj.y;
+        var othertop = otherobj.y - (otherobj.height / 2);
         var otherbottom = otherobj.y + (otherobj.height / 2);
         var crash = true;
         if ((mytop > otherbottom) || (myleft > otherright) || (myright < otherleft) || (mybottom < othertop)) {
             crash = false;
         }
-        return crash;/*
-        var myleft = this.x - (this.width / 2);
-        var myright = this.x + (this.width / 2);
-        var mytop = this.y - (this.height / 2);
-        var mybottom = this.y + (this.height / 2);
-        var objleft = obj.x - (obj.width / 2);
-        var objright = obj.x + (obj.width / 2);
-        var objtop = obj.y - (obj.height / 2);
-        var objbottom = obj.y + (obj.height / 2);
-        var crash = true;
-        if ((myleft < objleft) && (myright > objright) && (mytop > objtop) && (mybottom < objbottom)) {
-            crash = false;
-        }
-        return crash;*/
+        return crash;
     }
     this.scaleto = function() {
         ctx = area.context;
