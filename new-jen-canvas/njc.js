@@ -1,11 +1,10 @@
 var char;
-var obA;
-var bullet;
+var ob;
 
 function start() { // initiates game
+    
+    ob = new component(20, 20, "red", 400, 400, "ob"); 
     char = new component(15, 15, "#fa8940", 250, 265, "char"); 
-    img = new component(16, 16, "blue", 20, 20, "img");
-    obA = new component(200, 200, "red", 400, 400, "obA"); 
     area.start();
 }
 
@@ -34,22 +33,17 @@ var area = { // setting up canvas and its properties
     }
 }
 
-function component(width, height, color, x, y, type) {
-    this.type = type;
-    if (type == "image") {
-        this.image = new Image();
-        this.image.src = color;
-    }
+function component(width, height, color, x, y) {
     this.width = width;
     this.height = height;
-    this.x = x; // x pos
-    this.y = y; // y pos
-    this.angle = Math.PI/2;  // in radians
-    this.speed = 0; // character speed
-    this.angleInc = 0; // how much angle increments by
-    this.posDeg = function() {
+    this.x = x; 
+    this.y = y; 
+    this.angle = Math.PI/2; 
+    this.speed = 0; 
+    this.angleInc = 0; 
+    this.update = function() {
         ctx = area.context;
-        ctx.save(); // saves the entire canvas
+        ctx.save(); 
         // canvas receives char properties (loc, deg, color)
         ctx.translate(this.x, this.y); 
         ctx.rotate(this.angle);
@@ -57,17 +51,10 @@ function component(width, height, color, x, y, type) {
         ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         // canvas spawns a duplicate char to its own properties
         ctx.restore();
-        
-        // canvas is restored to its last save but new char remains
-    }
-    this.posXY = function() {
+        // positioning
         this.angle += this.angleInc * Math.PI / 180;
         this.x += this.speed * Math.sin(this.angle);
         this.y -= this.speed * Math.cos(this.angle);   
-        
-    }  
-    this.altPos = function() {
-        this.angle += this.angleInc * Math.PI / 180;
     }  
     this.crashWith = function(otherobj) {
         var myleft = this.x - (this.width / 2);
@@ -81,22 +68,15 @@ function component(width, height, color, x, y, type) {
         var crash = true;
         if ((mytop > otherbottom) || (myleft > otherright) || (myright < otherleft) || (mybottom < othertop)) {
             crash = false;
-        }
+        } 
         return crash;
     }
-    this.scaleto = function() {
-        ctx = area.context;
-        ctx.save();
-        ctx.translate(this.x,this.y);
-        ctx.scale(2,2);
-        ctx.rotate(this.angle);
-        ctx.fillStyle = color;
-        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        ctx.restore();
-        area.stop();
-    }
-    this.shoot = function() {
-        
+    this.follow = function(obj) {
+        this.x = obj.x;
+        this.y = obj.y;
+        this.angle = obj.angle;
+        this.angleInc = obj.angleInc;
+        this.speed = obj.speed;
     }
 }
 
@@ -104,53 +84,34 @@ var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 
 function updateArea() {
-    if (char.crashWith(obA)) {
-        area.clear(); // so no duplicate char
-        obA.posXY();
-        obA.posDeg();   
-        char.angleInc = 0;
-        char.speed = 3;
-        if (area.keys && area.keys[32]) {
-            angleSpeed = 3 + inc;
-            char.angleInc = angleSpeed;
-            inc += 0.1; // the longer area.keys[32], the faster char spins
-        } else if (angleSpeed > 0) {
-            inc = 0;
-            angleSpeed -= 1;
-            char.angleInc = angleSpeed;
-        } 
-        char.posDeg(); // updates rotation factor
-        char.altPos(); // updates rotation orientation
-        char.scaleto();
+    if (char.crashWith(ob)) {
+        area.clear();
+        
+        char.update();
+        ob.follow(char);
+        ob.update();
     } else { 
-        area.clear(); // so no duplicate char
-        obA.posXY();
-        obA.posDeg();
-        img.posXY();
-        img.posDeg();   
+        area.clear(); 
         char.angleInc = 0;
         char.speed = 3;
         if (area.keys && area.keys[32]) {
             angleSpeed = 3 + inc;
             char.angleInc = angleSpeed;
-            inc += 0.1; // the longer area.keys[32], the faster char spins
+            inc += 0.1; 
         } else if (angleSpeed > 0) {
             inc = 0;
             angleSpeed -= 1;
             char.angleInc = angleSpeed;
         } 
-        char.posXY(); // updates 2d location  
-        char.posDeg(); // updates rotation factor
+        char.update();
+        ob.update();  
     }
 }
 
+// so space doesn't scroll the page
 window.onkeydown = function(e) {
     if (e.keyCode == 32 && e.target == document.body) {
         e.preventDefault();
         return false;
     }
 };
-
-function hi() {
-    char.scaleto();
-}
