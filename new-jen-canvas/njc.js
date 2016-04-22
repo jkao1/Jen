@@ -101,13 +101,14 @@ function updateArea() {
         char.update();
         if (handle) {
             ob.follow(char);
+        } else {
+            ob.speed = .1; 
+            ob.angleInc = 0; 
         }
-        if (area.keys && area.keys[83]) {
-            if (handle) {
-                handle = false;
-            } else {
-                handle = true;
-            }
+        if (area.keys && area.keys[83]) { // S
+            handle = false;
+        } else if (area.keys && area.keys[68]) { // D
+            handle = true;
         }
         ob.update();
     } else { 
