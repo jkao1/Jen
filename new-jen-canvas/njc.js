@@ -72,8 +72,8 @@ function component(width, height, color, x, y) {
         return crash;
     }
     this.follow = function(obj) {
-        this.x = obj.x;
-        this.y = obj.y;
+        this.x = obj.x + 7;
+        this.y = obj.y + 7;
         this.angle = obj.angle;
         this.angleInc = obj.angleInc;
         this.speed = obj.speed;
@@ -82,13 +82,33 @@ function component(width, height, color, x, y) {
 
 var inc = 0; // angleInc's increment
 var angleSpeed = 0;
+var handle = true;
 
 function updateArea() {
     if (char.crashWith(ob)) {
         area.clear();
-        
+        char.angleInc = 0;
+        char.speed = 3;
+        if (area.keys && area.keys[32]) {
+            angleSpeed = 3 + inc;
+            char.angleInc = angleSpeed;
+            inc += 0.1; 
+        } else if (angleSpeed > 0) {
+            inc = 0;
+            angleSpeed -= 1;
+            char.angleInc = angleSpeed;
+        } 
         char.update();
-        ob.follow(char);
+        if (handle) {
+            ob.follow(char);
+        }
+        if (area.keys && area.keys[83]) {
+            if (handle) {
+                handle = false;
+            } else {
+                handle = true;
+            }
+        }
         ob.update();
     } else { 
         area.clear(); 
