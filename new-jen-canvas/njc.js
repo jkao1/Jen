@@ -3,8 +3,9 @@ var ob;
 
 function start() { // initiates game
     
-    ob = new component(20, 20, "red", 400, 400, "ob"); 
-    char = new component(15, 15, "#fa8940", 250, 265, "char"); 
+    ob = new component(20, 20, "red", 400, 400); 
+    ob2 = new component(20, 20, "blue", 300, 300)
+    char = new component(15, 15, "#fa8940", 250, 265); 
     area.start();
 }
 
@@ -78,11 +79,17 @@ function component(width, height, color, x, y) {
         this.angleInc = obj.angleInc;
         this.speed = obj.speed;
     }
+    this.drop = function() {
+        this.x += 1;
+        this.y += 1;
+        
+    }
 }
 
 var inc = 0; // angleInc's increment
 var angleSpeed = 0;
-var handle = true;
+var obHandle = true;
+var ob2Handle = true;
 
 function updateArea() {
     if (char.crashWith(ob)) {
@@ -99,18 +106,42 @@ function updateArea() {
             char.angleInc = angleSpeed;
         } 
         char.update();
-        if (handle) {
+        if (obHandle) {
             ob.follow(char);
-        } else {
-            ob.speed = .1; 
-            ob.angleInc = 0; 
         }
         if (area.keys && area.keys[83]) { // S
-            handle = false;
-        } else if (area.keys && area.keys[68]) { // D
-            handle = true;
+            obHandle = false;
+        } 
+        if (area.keys && area.keys[68]) { // D
+            obHandle = true;
         }
         ob.update();
+        ob2.update();
+    } else if (char.crashWith(ob2)) {
+        area.clear();
+        char.angleInc = 0;
+        char.speed = 3;
+        if (area.keys && area.keys[32]) {
+            angleSpeed = 3 + inc;
+            char.angleInc = angleSpeed;
+            inc += 0.1; 
+        } else if (angleSpeed > 0) {
+            inc = 0;
+            angleSpeed -= 1;
+            char.angleInc = angleSpeed;
+        } 
+        char.update();
+        if (ob2Handle) {
+            ob2.follow(char);
+        }
+        if (area.keys && area.keys[83]) { // S
+            ob2Handle = false;
+        } 
+        if (area.keys && area.keys[68]) { // D
+            ob2Handle = true;
+        }
+        ob.update();
+        ob2.update();
     } else { 
         area.clear(); 
         char.angleInc = 0;
@@ -126,6 +157,7 @@ function updateArea() {
         } 
         char.update();
         ob.update();  
+        ob2.update();
     }
 }
 
