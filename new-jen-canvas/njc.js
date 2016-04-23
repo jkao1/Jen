@@ -1,8 +1,23 @@
+/*
+
+ideas:
+- on completing the mission, background changes traffic-light green
+- zooming in tutorial (zoom functions located in extra.js)
+
+in progress:
+- zoom in and slice (zoom.js)
+    - (finished) zoom in the canvas 
+    - zoom in on a specific point
+    - issue: square root
+    - (working) slash rotation
+
+!* TAB-TAB after a tag will automatically close it *!
+
+*/
 var char;
 var ob;
 
 function start() { // initiates game
-    
     ob = new component(20, 20, "red", 400, 400); 
     ob2 = new component(20, 20, "blue", 300, 300)
     char = new component(15, 15, "#fa8940", 250, 265); 
@@ -14,6 +29,7 @@ var area = { // setting up canvas and its properties
     start : function() {
         this.canvas.width = 960;
         this.canvas.height = 560;
+        this.canvas.id = 'canvas';
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateArea, 20); 
@@ -31,7 +47,7 @@ var area = { // setting up canvas and its properties
     },
     stop : function() {
         clearInterval(this.interval);
-    }
+    },
 }
 
 function component(width, height, color, x, y) {
@@ -79,10 +95,10 @@ function component(width, height, color, x, y) {
         this.angleInc = obj.angleInc;
         this.speed = obj.speed;
     }
-    this.drop = function() {
-        this.x += 1;
-        this.y += 1;
-        
+    this.distance = function(obj) {
+        var diffX = this.x - obj.x;
+        var diffY = this.y - obj.y
+        return (this.x - obj.x) + (this.y - obj.y);
     }
 }
 
@@ -90,25 +106,29 @@ var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 var obHandle = true;
 var ob2Handle = true;
+var shot = true;
 
+function turn() {
+    char.angleInc = 0;
+    char.speed = 3;
+    if (area.keys && area.keys[32]) {
+        angleSpeed = 3 + inc;
+        char.angleInc = angleSpeed;
+        inc += 0.1; 
+    } else if (angleSpeed > 0) {
+        inc = 0;
+        angleSpeed -= 1;
+        char.angleInc = angleSpeed;
+    }
+}
 function updateArea() {
     if (char.crashWith(ob)) {
         area.clear();
-        char.angleInc = 0;
-        char.speed = 3;
-        if (area.keys && area.keys[32]) {
-            angleSpeed = 3 + inc;
-            char.angleInc = angleSpeed;
-            inc += 0.1; 
-        } else if (angleSpeed > 0) {
-            inc = 0;
-            angleSpeed -= 1;
-            char.angleInc = angleSpeed;
-        } 
+        turn(); 
         char.update();
         if (obHandle) {
             ob.follow(char);
-        }
+        } 
         if (area.keys && area.keys[83]) { // S
             obHandle = false;
         } 
@@ -119,21 +139,11 @@ function updateArea() {
         ob2.update();
     } else if (char.crashWith(ob2)) {
         area.clear();
-        char.angleInc = 0;
-        char.speed = 3;
-        if (area.keys && area.keys[32]) {
-            angleSpeed = 3 + inc;
-            char.angleInc = angleSpeed;
-            inc += 0.1; 
-        } else if (angleSpeed > 0) {
-            inc = 0;
-            angleSpeed -= 1;
-            char.angleInc = angleSpeed;
-        } 
+        turn();
         char.update();
         if (ob2Handle) {
             ob2.follow(char);
-        }
+        } 
         if (area.keys && area.keys[83]) { // S
             ob2Handle = false;
         } 
@@ -144,17 +154,7 @@ function updateArea() {
         ob2.update();
     } else { 
         area.clear(); 
-        char.angleInc = 0;
-        char.speed = 3;
-        if (area.keys && area.keys[32]) {
-            angleSpeed = 3 + inc;
-            char.angleInc = angleSpeed;
-            inc += 0.1; 
-        } else if (angleSpeed > 0) {
-            inc = 0;
-            angleSpeed -= 1;
-            char.angleInc = angleSpeed;
-        } 
+        turn();
         char.update();
         ob.update();  
         ob2.update();
