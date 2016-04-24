@@ -12,11 +12,7 @@ this.scaleto = function() {
 }
 
 // zooming
-this.distance = function(obj) {
-    var diffX = this.x - obj.x;
-    var diffY = this.y - obj.y
-    return (this.x - obj.x) + (this.y - obj.y);
-}
+
 
 if (char.distance(ob) < 100 && char.distance(ob) > -100) {
     can = document.getElementById('canvas');

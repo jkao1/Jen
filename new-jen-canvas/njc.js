@@ -100,13 +100,16 @@ function component(width, height, color, x, y) {
         var diffY = this.y - obj.y
         return (this.x - obj.x) + (this.y - obj.y);
     }
+    this.throw = function(obj) {
+        
+    }
 }
 
 var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 var obHandle = true;
 var ob2Handle = true;
-var shot = true;
+var thrown = false;
 
 function turn() {
     char.angleInc = 0;
@@ -122,10 +125,10 @@ function turn() {
     }
 }
 function updateArea() {
+    area.clear();
+    turn();
+    char.update();
     if (char.crashWith(ob)) {
-        area.clear();
-        turn(); 
-        char.update();
         if (obHandle) {
             ob.follow(char);
         } 
@@ -135,12 +138,7 @@ function updateArea() {
         if (area.keys && area.keys[68]) { // D
             obHandle = true;
         }
-        ob.update();
-        ob2.update();
     } else if (char.crashWith(ob2)) {
-        area.clear();
-        turn();
-        char.update();
         if (ob2Handle) {
             ob2.follow(char);
         } 
@@ -150,15 +148,9 @@ function updateArea() {
         if (area.keys && area.keys[68]) { // D
             ob2Handle = true;
         }
-        ob.update();
-        ob2.update();
-    } else { 
-        area.clear(); 
-        turn();
-        char.update();
-        ob.update();  
-        ob2.update();
-    }
+    } 
+    ob.update();
+    ob2.update();
 }
 
 // so space doesn't scroll the page
