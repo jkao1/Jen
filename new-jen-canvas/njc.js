@@ -129,25 +129,13 @@ function updateArea() {
     turn();
     char.update();
     if (char.crashWith(ob)) {
-        if (obHandle) {
-            ob.follow(char);
-        } 
-        if (area.keys && area.keys[83]) { // S
-            obHandle = false;
-        } 
-        if (area.keys && area.keys[68]) { // D
-            obHandle = true;
-        }
+        if (obHandle) {ob.follow(char)} 
+        if (area.keys && area.keys[83]) {obHandle = false} 
+        if (area.keys && area.keys[68]) {obHandle = true} 
     } else if (char.crashWith(ob2)) {
-        if (ob2Handle) {
-            ob2.follow(char);
-        } 
-        if (area.keys && area.keys[83]) { // S
-            ob2Handle = false;
-        } 
-        if (area.keys && area.keys[68]) { // D
-            ob2Handle = true;
-        }
+        if (ob2Handle) {ob2.follow(char)} 
+        if (area.keys && area.keys[83]) {ob2Handle = false} 
+        if (area.keys && area.keys[68]) {ob2Handle = true} 
     } 
     ob.update();
     ob2.update();
