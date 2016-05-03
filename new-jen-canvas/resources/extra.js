@@ -12,8 +12,6 @@ this.scaleto = function() {
 }
 
 // zooming
-
-
 if (char.distance(ob) < 100 && char.distance(ob) > -100) {
     can = document.getElementById('canvas');
     can.style.transitionDuration = "3s";

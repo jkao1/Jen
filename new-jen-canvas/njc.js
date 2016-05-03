@@ -131,11 +131,11 @@ function updateArea() {
     if (char.crashWith(ob)) {
         if (obHandle) {ob.follow(char)} 
         if (area.keys && area.keys[83]) {obHandle = false} 
-        if (area.keys && area.keys[68]) {obHandle = true} 
+        else if (area.keys && area.keys[68]) {obHandle = true} 
     } else if (char.crashWith(ob2)) {
         if (ob2Handle) {ob2.follow(char)} 
         if (area.keys && area.keys[83]) {ob2Handle = false} 
-        if (area.keys && area.keys[68]) {ob2Handle = true} 
+        else if (area.keys && area.keys[68]) {ob2Handle = true} 
     } 
     ob.update();
     ob2.update();
