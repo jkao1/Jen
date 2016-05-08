@@ -11,16 +11,18 @@ in progress:
     - issue: square root
     - (working) slash rotation
 
-!* TAB-TAB after a tag will automatically close it *!
-
 */
+
 var char;
 var ob;
+var ob2;
+var imagine;
 
 function start() { // initiates game
     ob = new component(20, 20, "red", 400, 400); 
-    ob2 = new component(20, 20, "blue", 300, 300)
+    ob2 = new component(20, 20, "blue", 300, 300);
     char = new component(15, 15, "#fa8940", 250, 265); 
+    imagine = new imag(20, 20, "img.png", 10, 230, "image");
     area.start();
 }
 
@@ -32,6 +34,7 @@ var area = { // setting up canvas and its properties
         this.canvas.id = 'canvas';
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
         this.interval = setInterval(updateArea, 20); 
         // keyboard stuff
         window.addEventListener('keydown', function (e) {
@@ -50,7 +53,13 @@ var area = { // setting up canvas and its properties
     },
 }
 
-function component(width, height, color, x, y) {
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+        alert("Hello! I am an alert box!!");
+    }
     this.width = width;
     this.height = height;
     this.x = x; 
@@ -60,18 +69,22 @@ function component(width, height, color, x, y) {
     this.angleInc = 0; 
     this.update = function() {
         ctx = area.context;
-        ctx.save(); 
-        // canvas receives char properties (loc, deg, color)
-        ctx.translate(this.x, this.y); 
-        ctx.rotate(this.angle);
-        ctx.fillStyle = color;
-        ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        // canvas spawns a duplicate char to its own properties
-        ctx.restore();
-        // positioning
-        this.angle += this.angleInc * Math.PI / 180;
-        this.x += this.speed * Math.sin(this.angle);
-        this.y -= this.speed * Math.cos(this.angle);   
+        if (type == "image") {
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        } else {
+            ctx.save(); 
+            // canvas receives char properties (loc, deg, color)
+            ctx.translate(this.x, this.y); 
+            ctx.rotate(this.angle);
+            ctx.fillStyle = color;
+            ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+            // canvas spawns a duplicate char to its own properties
+            ctx.restore();
+            // positioning
+            this.angle += this.angleInc * Math.PI / 180;
+            this.x += this.speed * Math.sin(this.angle);
+            this.y -= this.speed * Math.cos(this.angle);   
+        }
     }  
     this.crashWith = function(otherobj) {
         var myleft = this.x - (this.width / 2);
@@ -99,9 +112,6 @@ function component(width, height, color, x, y) {
         var diffX = this.x - obj.x;
         var diffY = this.y - obj.y
         return (this.x - obj.x) + (this.y - obj.y);
-    }
-    this.throw = function(obj) {
-        
     }
 }
 
@@ -139,6 +149,7 @@ function updateArea() {
     } 
     ob.update();
     ob2.update();
+    imagine.update();
 }
 
 // so space doesn't scroll the page
