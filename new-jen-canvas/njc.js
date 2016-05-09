@@ -13,16 +13,17 @@ in progress:
 
 */
 
-var char;
+/*var char;
 var ob;
-var ob2;
+var ob2;*/
 var imagine;
 
 function start() { // initiates game
-    ob = new component(20, 20, "red", 400, 400); 
-    ob2 = new component(20, 20, "blue", 300, 300);
-    char = new component(15, 15, "#fa8940", 250, 265); 
-    imagine = new imag(20, 20, "img.png", 10, 230, "image");
+    //ob = new component(20, 20, "red", 400, 400); 
+    //ob2 = new component(20, 20, "blue", 300, 300);
+    //char = new component(15, 15, "#fa8940", 250, 265); 
+    
+    imagine = new componenet(20, 20, "img.png", 10, 230, "image");
     area.start();
 }
 
@@ -31,19 +32,19 @@ var area = { // setting up canvas and its properties
     start : function() {
         this.canvas.width = 960;
         this.canvas.height = 560;
-        this.canvas.id = 'canvas';
+        //this.canvas.id = 'canvas';
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateArea, 20); 
-        // keyboard stuff
+        /* keyboard stuff
         window.addEventListener('keydown', function (e) {
             area.keys = (area.keys || []);
             area.keys[e.keyCode] = (e.type == 'keydown');
         })
         window.addEventListener('keyup', function (e) {
             area.keys[e.keyCode] = (e.type == 'keydown');
-        })
+        })*/
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); 
@@ -54,11 +55,11 @@ var area = { // setting up canvas and its properties
 }
 
 function component(width, height, color, x, y, type) {
+    alert('hi');
     this.type = type;
     if (type == "image") {
         this.image = new Image();
         this.image.src = color;
-        alert("Hello! I am an alert box!!");
     }
     this.width = width;
     this.height = height;

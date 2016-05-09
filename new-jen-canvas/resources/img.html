@@ -38,6 +38,7 @@ var myGameArea = {
 }
 
 function component(width, height, color, x, y, type) {
+    alert('hi');
     this.type = type;
     if (type == "image") {
         this.image = new Image();
@@ -69,39 +70,8 @@ function component(width, height, color, x, y, type) {
 
 function updateGameArea() {
     myGameArea.clear();
-    myGamePiece.newPos();
     myGamePiece.update();
 }
-
-function moveup() {
-    myGamePiece.speedY = -1; 
-}
-
-function movedown() {
-    myGamePiece.speedY = 1; 
-}
-
-function moveleft() {
-    myGamePiece.speedX = -1; 
-}
-
-function moveright() {
-    myGamePiece.speedX = 1; 
-}
-
-function clearmove() {
-    myGamePiece.speedX = 0; 
-    myGamePiece.speedY = 0; 
-}
 </script>
-<div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-</div>
-
-<p>The component constructor uses the built-in image object to draw images onto the canvas.</p>
-
 </body>
 </html>
