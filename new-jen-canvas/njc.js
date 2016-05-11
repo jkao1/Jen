@@ -13,17 +13,12 @@ in progress:
 
 */
 
-/*var char;
-var ob;
-var ob2;*/
-var imagine;
-
 function start() { // initiates game
-    //ob = new component(20, 20, "red", 400, 400); 
-    //ob2 = new component(20, 20, "blue", 300, 300);
-    //char = new component(15, 15, "#fa8940", 250, 265); 
+    ob = new component(20, 20, "red", 400, 400); 
+    ob2 = new component(20, 20, "blue", 300, 300);
+    ob3 = new component(20, 20, "yellow", 250, 500);
+    char = new component(15, 15, "#fa8940", 250, 265); 
     
-    imagine = new componenet(20, 20, "img.png", 10, 230, "image");
     area.start();
 }
 
@@ -32,19 +27,19 @@ var area = { // setting up canvas and its properties
     start : function() {
         this.canvas.width = 960;
         this.canvas.height = 560;
-        //this.canvas.id = 'canvas';
+        this.canvas.id = 'canvas';
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
         this.interval = setInterval(updateArea, 20); 
-        /* keyboard stuff
+        // keyboard stuff
         window.addEventListener('keydown', function (e) {
             area.keys = (area.keys || []);
             area.keys[e.keyCode] = (e.type == 'keydown');
         })
         window.addEventListener('keyup', function (e) {
             area.keys[e.keyCode] = (e.type == 'keydown');
-        })*/
+        })
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); 
@@ -55,7 +50,6 @@ var area = { // setting up canvas and its properties
 }
 
 function component(width, height, color, x, y, type) {
-    alert('hi');
     this.type = type;
     if (type == "image") {
         this.image = new Image();
@@ -120,7 +114,7 @@ var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 var obHandle = true;
 var ob2Handle = true;
-var thrown = false;
+var ob3Handle = true;
 
 function turn() {
     char.angleInc = 0;
@@ -135,21 +129,27 @@ function turn() {
         char.angleInc = angleSpeed;
     }
 }
+
 function updateArea() {
     area.clear();
     turn();
     char.update();
-    if (char.crashWith(ob)) {
+    if (char.crashWith(ob)) { 
         if (obHandle) {ob.follow(char)} 
-        if (area.keys && area.keys[83]) {obHandle = false} 
+        if (area.keys && area.keys[83]) {obHandle = false;ob.angleInc = 0;ob.speed = 0;} 
         else if (area.keys && area.keys[68]) {obHandle = true} 
     } else if (char.crashWith(ob2)) {
         if (ob2Handle) {ob2.follow(char)} 
         if (area.keys && area.keys[83]) {ob2Handle = false} 
         else if (area.keys && area.keys[68]) {ob2Handle = true} 
+    } else if (char.crashWith(ob3)) {
+        if (ob3Handle) {ob3.follow(char)} 
+        if (area.keys && area.keys[83]) {ob3Handle = false} 
+        else if (area.keys && area.keys[68]) {ob3Handle = true} 
     } 
     ob.update();
     ob2.update();
+    ob3.update();
     imagine.update();
 }
 
