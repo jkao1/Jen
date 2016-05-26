@@ -15,8 +15,8 @@ in progress:
 
 function start() { // initiates game
     ob = new component(20, 20, "red", 400, 400); 
-    ob2 = new component(20, 20, "blue", 300, 300);
-    ob3 = new component(20, 20, "yellow", 250, 500);
+    ob2 = new component(20, 20, "blue", 300, 400);
+    ob3 = new component(20, 20, "yellow", 200, 400);
     char = new component(15, 15, "#fa8940", 250, 265); 
     
     area.start();
@@ -140,13 +140,16 @@ function updateArea() {
         else if (area.keys && area.keys[68]) {obHandle = true} 
     } else if (char.crashWith(ob2)) {
         if (ob2Handle) {ob2.follow(char)} 
-        if (area.keys && area.keys[83]) {ob2Handle = false} 
+        if (area.keys && area.keys[83]) {ob2Handle = false;ob2Handle = false;ob2.angleInc = 0;ob2.speed = 0;} 
         else if (area.keys && area.keys[68]) {ob2Handle = true} 
     } else if (char.crashWith(ob3)) {
         if (ob3Handle) {ob3.follow(char)} 
-        if (area.keys && area.keys[83]) {ob3Handle = false} 
+        if (area.keys && area.keys[83]) {ob3Handle = false;ob3Handle = false;ob3.angleInc = 0;ob3.speed = 0;} 
         else if (area.keys && area.keys[68]) {ob3Handle = true} 
     } 
+    if (ob.crashWith(ob2) && !(obHandle)) {
+        document.getElementById('canvas').style.background = 'green';
+    }
     ob.update();
     ob2.update();
     ob3.update();
